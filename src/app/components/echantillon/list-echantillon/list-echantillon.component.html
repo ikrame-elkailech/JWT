@@ -1,0 +1,63 @@
+<div class="container-fluid mt-n10">
+  <div class="card mb-4">
+    <div class="card-header">Extended DataTables</div>
+    <div class="card-body">
+      <div class="datatable table-responsive">
+        <table class="table table-bordered table-hover" 
+          width="100%" >
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Date de Réception</th>
+              <th>Code de l'Échantillon</th>
+              <th>Nom du Patien</th>
+              <th>Nom de l'Utilisateur'</th>
+              <th>Assigné</th>
+              <th>Créé le</th>
+              <th>Mis à jour le</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody *ngIf="echantillons && echantillons.length > 0">
+
+            <!-- <tr *ngFor="let echantillion of echantillons"> -->
+              <tr *ngFor="let echantillion of echantillonsPages[currentPage]">
+              <td>{{ echantillion.id}}</td>
+              <td>{{ echantillion.dateDeReception | date:'yyyy-MM-dd' }}</td>
+              <td>{{ echantillion.echantillonCode }}</td>
+              <td>{{ echantillion.patientNom }}</td>
+              <td>{{ echantillion.utilisateurNom }}</td>
+              <td>
+                <div [ngClass]="{'badge badge-pill': true, 'badge-success': echantillion.assigned, 'badge-warning': !echantillion.assigned}">
+                  {{ echantillion.assigned }}
+                </div>
+              </td>
+              <td>{{ echantillion.createdAt | date:'yyyy-MM-dd' }}</td>
+              <td>{{ echantillion.updatedAt | date:'yyyy-MM-ddTHH:mm:ss' }}</td>
+
+              <td>
+                <a [routerLink]="'/updateSample/' + echantillion.id" type="button" class="btn btn-secoondary btn-sm mr-2">
+                  <i class="fa fa-pencil-alt"></i>
+                </a>
+                <button type="button" class="btn btn-outline-danger btn-sm">
+                  <i class="fa fa-trash"></i>
+                </button>
+        
+
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+        <div class="d-flex justify-content-center">
+          <button (click)="previousPage()" [disabled]="currentPage === 0" class="btn btn-outline-primary mr-2">
+            <i class="fas fa-chevron-left"></i> 
+          </button>
+          <button (click)="nextPage()" [disabled]="currentPage === echantillonsPages.length - 1" class="btn btn-outline-primary">
+             <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
